@@ -5,5 +5,6 @@ data class GameState(
     var computerAction: String = "-",
     var totalScore: String = "0 / 0",
     var playerScore: Int = 0,
-    var computerScore: Int = 0
+    var computerScore: Int = 0,
+    var moveHistory: MutableList<MoveState> = mutableListOf()
 )

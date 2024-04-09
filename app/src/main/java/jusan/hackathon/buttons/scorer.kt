@@ -1,7 +1,7 @@
 package jusan.hackathon.buttons
 
 fun scorer(playerAction: String, computerAction: String): Int {
-    // winner is if; 1: player, 0: android, 2: tie
+    // winner is if; 1: player, 0: computer, 2: tie
     var win = 0
     if (playerAction == computerAction)
         win = 2

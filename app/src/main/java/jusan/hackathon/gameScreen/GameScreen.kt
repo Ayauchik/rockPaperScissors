@@ -19,18 +19,25 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import jusan.hackathon.buttons.PaperButton
 import jusan.hackathon.buttons.RockButton
 import jusan.hackathon.buttons.ScissorsButton
 import jusan.hackathon.buttons.scorer
+import org.koin.androidx.compose.get
+import kotlin.math.max
 import kotlin.random.Random
 
 @Composable
-fun GameScreen() {
-    val gameState by remember { mutableStateOf(GameState()) }
+fun GameScreen(
+    gameScreenViewModel: GameScreenViewModel = get()
+) {
+    val gameState = gameScreenViewModel.gameState.value
 
     Column {
         Text(
@@ -63,21 +70,16 @@ fun GameScreen() {
             }
 
         }
+        var index = 1
         Row(modifier = Modifier.padding(top = 70.dp)) {
             Column(
                 Modifier
                     .fillMaxWidth(0.33f)
                     .wrapContentWidth(Alignment.CenterHorizontally)
             ) {
-                RockButton{
-                    gameState.playerAction = "Rock"
-                    gameState.computerAction = generateActionForComputer()
-                    val win = scorer(gameState.playerAction, gameState.computerAction)
-                    if (win == 1)
-                        gameState.playerScore++
-                    else if (win == 0)
-                        gameState.computerScore++
-                    gameState.totalScore = "${gameState.playerScore} / ${gameState.computerScore}"
+                RockButton {
+                    gameScreenViewModel.onPlayerMove("Rock")
+                    index++
                 }
             }
             Column(
@@ -86,14 +88,8 @@ fun GameScreen() {
                     .wrapContentWidth(Alignment.CenterHorizontally)
             ) {
                 PaperButton {
-                    gameState.playerAction = "Paper"
-                    gameState.computerAction = generateActionForComputer()
-                    val win = scorer(gameState.playerAction, gameState.computerAction)
-                    if (win == 1)
-                        gameState.playerScore++
-                    else if (win == 0)
-                        gameState.computerScore++
-                    gameState.totalScore = "${gameState.playerScore} / ${gameState.computerScore}"
+                    gameScreenViewModel.onPlayerMove("Paper")
+                    index++
                 }
             }
             Column(
@@ -102,26 +98,39 @@ fun GameScreen() {
                     .wrapContentWidth(Alignment.CenterHorizontally)
             ) {
                 ScissorsButton {
-                    gameState.playerAction = "Scissors"
-                    gameState.computerAction = generateActionForComputer()
-                    val win = scorer(gameState.playerAction, gameState.computerAction)
-                    if (win == 1)
-                        gameState.playerScore++
-                    else if (win == 0)
-                        gameState.computerScore++
-                    gameState.totalScore = "${gameState.playerScore} / ${gameState.computerScore}"
+                    gameScreenViewModel.onPlayerMove("Scissors")
+                    index++
                 }
             }
         }
 
-        Spacer(modifier = Modifier.size(80.dp))
+        Spacer(modifier = Modifier.size(60.dp))
+
+        val maxDisplayedMoves = 3
+        val startIndex = max(0, gameState.moveHistory.size - maxDisplayedMoves)
+        val endIndex = gameState.moveHistory.size - 1
+        val displayedMoves = gameState.moveHistory.subList(startIndex, endIndex + 1)
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Text(
+                text = "Move History", fontSize = 24.sp, modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentWidth(Alignment.CenterHorizontally)
+            )
+            Spacer(modifier = Modifier.size(8.dp))
+            displayedMoves.forEachIndexed { index, move ->
+                Text(
+                    text = "${startIndex + index + 1}. Player: ${move.playerAction}, Computer: ${move.computerAction}, Result: ${move.result}",
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+            }
+        }
+
+
+        Spacer(modifier = Modifier.size(8.dp))
         Button(
             onClick = {
-                gameState.playerScore = 0
-                gameState.computerScore = 0
-                gameState.totalScore = "0 / 0"
-                gameState.playerAction = "-"
-                gameState.computerAction = "-"
+                gameScreenViewModel.resetGame()
             },
             modifier = Modifier
                 .padding(start = 100.dp)
@@ -129,6 +138,7 @@ fun GameScreen() {
             shape = RoundedCornerShape(16.dp),
         ) {
             Text(text = "Restart", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+            index = 0
         }
     }
 }
