@@ -42,21 +42,22 @@ fun ChooseModeScreen(
 ){
     Scaffold(
         modifier = Modifier
-        .fillMaxSize()
-        .background(),
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(text = stringResource(id = R.string.app_name))},
-                actions = {
-
-                },
-                )
-        },
+            .fillMaxSize()
+            .background(largeRadialGradient),
+//        topBar = {
+//            CenterAlignedTopAppBar(
+//                title = { Text(text = stringResource(id = R.string.app_name))},
+//                actions = {
+//
+//                },
+//                )
+//        },
     ){
         Column(
             modifier = Modifier
                 .padding(it)
-                .fillMaxSize(),
+                .fillMaxSize()
+            .background(largeRadialGradient),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Column(
@@ -64,6 +65,23 @@ fun ChooseModeScreen(
                     .fillMaxSize(1f)
                     .padding(24.dp)
             ){
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(0.dp)
+                ) {
+                        Text(
+                            text = "ROCK",
+                            style = MaterialTheme.typography.titleLarge,
+                        )
+                        Text(
+                            text = "PAPER",
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                        Text(
+                            text = "SCISSORS",
+                            style = MaterialTheme.typography.titleLarge,
+                        )
+                    }
+                Spacer(modifier = Modifier.height(24.dp))
                 PlayOnlineButton(onClick = onPlayOnline)
                 Spacer(modifier = Modifier.height(24.dp))
                 PlayComputerButton(onClick = onPlayBot)
@@ -147,7 +165,7 @@ fun PlayOnlineButton(
 }
 
 
-val argeRadialGradient = object : ShaderBrush() {
+val largeRadialGradient = object : ShaderBrush() {
     override fun createShader(size: androidx.compose.ui.geometry.Size): Shader {
         val biggerDimension = maxOf(size.height, size.width)
         return RadialGradientShader(
@@ -158,3 +176,4 @@ val argeRadialGradient = object : ShaderBrush() {
         )
     }
 }
+
