@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">rockPaperScissors</string>
+    <string name="waiting">%1$s waiting</string>
 </resources>
