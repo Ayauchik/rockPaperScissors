@@ -1,6 +1,5 @@
-package jusan.hackathon.gameScreen
+package jusan.hackathon.gameScreen.menuScreen.botGame
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,23 +11,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import jusan.hackathon.buttons.PaperButton
 import jusan.hackathon.buttons.RockButton
 import jusan.hackathon.buttons.ScissorsButton
-import jusan.hackathon.buttons.scorer
 import org.koin.androidx.compose.get
 import kotlin.math.max
 import kotlin.random.Random

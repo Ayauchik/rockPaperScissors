@@ -1,4 +1,4 @@
-package jusan.hackathon.gameScreen
+package jusan.hackathon.gameScreen.menuScreen.botGame
 
 data class MoveState(
     val playerAction: String,

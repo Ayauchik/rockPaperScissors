@@ -1,4 +1,4 @@
-package jusan.hackathon.gameScreen
+package jusan.hackathon.gameScreen.menuScreen.botGame
 
 import androidx.lifecycle.ViewModel
 import androidx.compose.runtime.MutableState
