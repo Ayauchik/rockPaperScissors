@@ -68,7 +68,7 @@ fun GameScreen(
                     .wrapContentWidth(Alignment.CenterHorizontally)
             ) {
                 RockButton {
-                    gameScreenViewModel.onPlayerMove("Rock")
+                    gameScreenViewModel.onPlayerMove(rock)
                     index++
                 }
             }
@@ -78,7 +78,7 @@ fun GameScreen(
                     .wrapContentWidth(Alignment.CenterHorizontally)
             ) {
                 PaperButton {
-                    gameScreenViewModel.onPlayerMove("Paper")
+                    gameScreenViewModel.onPlayerMove(paper)
                     index++
                 }
             }
@@ -88,7 +88,7 @@ fun GameScreen(
                     .wrapContentWidth(Alignment.CenterHorizontally)
             ) {
                 ScissorsButton {
-                    gameScreenViewModel.onPlayerMove("Scissors")
+                    gameScreenViewModel.onPlayerMove(scissors)
                     index++
                 }
             }
@@ -153,7 +153,11 @@ fun PlayerAction(player: String, action: String) {
 }
 
 fun generateActionForComputer(): String {
-    val list = listOf("Rock", "Paper", "Scissor")
+    val list = listOf(rock, paper, scissors)
     val randomIndex = Random.nextInt(list.size)
     return list[randomIndex]
 }
+
+const val rock = "Rock"
+const val paper = "Paper"
+const val scissors = "Scissors"
